@@ -26,9 +26,18 @@ namespace CurrencyConverterApp
 
             decimal amount;
             string text = amountTextBox.Text.Replace('.', ',');
-            if (!decimal.TryParse(text, out amount))
+            try
+            {
+                amount = decimal.Parse(text);
+            }
+            catch (FormatException)
             {
                 ShowMessage("Неверный формат суммы!");
+                return;
+            }
+            catch (OverflowException)
+            {
+                ShowMessage("Сумма вне допустимого диапазона. Введите число поменьше.");
                 return;
             }
 
@@ -39,6 +48,10 @@ namespace CurrencyConverterApp
             {
                 decimal result = converter.Convert(amount, fromCurrency, toCurrency);
                 resultLabel.Text = $"Результат: {amount} {fromCurrency} = {result:F2} {toCurrency}";
+            }
+            catch (OverflowException)
+            {
+                ShowMessage("Результат слишком велик для конвертации. Введите сумму поменьше.");
             }
             catch (Exception ex)
             {
