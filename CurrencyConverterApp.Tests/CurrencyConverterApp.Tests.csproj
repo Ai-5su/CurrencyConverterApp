@@ -58,6 +58,7 @@
     <Compile Include="TestableForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="UITests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
