@@ -44,7 +44,6 @@
             this.fromCurrencyComboBox.Name = "fromCurrencyComboBox";
             this.fromCurrencyComboBox.Size = new System.Drawing.Size(121, 38);
             this.fromCurrencyComboBox.TabIndex = 0;
-            
             // 
             // toCurrencyComboBox
             // 
@@ -55,7 +54,6 @@
             this.toCurrencyComboBox.Name = "toCurrencyComboBox";
             this.toCurrencyComboBox.Size = new System.Drawing.Size(121, 38);
             this.toCurrencyComboBox.TabIndex = 1;
-            
             // 
             // amountTextBox
             // 
@@ -85,7 +83,6 @@
             this.resultLabel.Size = new System.Drawing.Size(115, 30);
             this.resultLabel.TabIndex = 4;
             this.resultLabel.Text = "Результат:";
-            
             // 
             // Form1
             // 
@@ -102,8 +99,7 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Конвертер валют v1.0.0";
-           
+            this.Text = "Конвертер валют v1.1.0";
             this.ResumeLayout(false);
             this.PerformLayout();
 
