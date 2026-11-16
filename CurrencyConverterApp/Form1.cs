@@ -10,30 +10,25 @@ namespace CurrencyConverterApp
         public Form1()
         {
             InitializeComponent();
-
-            // Заполняем списки валютами
             fromCurrencyComboBox.Items.AddRange(new object[] { "USD", "EUR" });
             toCurrencyComboBox.Items.AddRange(new object[] { "USD", "EUR" });
-
-            // Выбираем значения по умолчанию
-            fromCurrencyComboBox.SelectedIndex = 0; // USD
-            toCurrencyComboBox.SelectedIndex = 1;   // EUR
+            fromCurrencyComboBox.SelectedIndex = 0;
+            toCurrencyComboBox.SelectedIndex = 1;
         }
 
-        private void convertButton_Click(object sender, EventArgs e)
+        public void convertButton_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(amountTextBox.Text))
             {
-                MessageBox.Show("Введите сумму для конвертации!");
+                ShowMessage("Введите сумму для конвертации!");
                 return;
             }
 
             decimal amount;
             string text = amountTextBox.Text.Replace('.', ',');
-
             if (!decimal.TryParse(text, out amount))
             {
-                MessageBox.Show("Неверный формат суммы!");
+                ShowMessage("Неверный формат суммы!");
                 return;
             }
 
@@ -47,8 +42,13 @@ namespace CurrencyConverterApp
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                ShowMessage(ex.Message);
             }
+        }
+
+        protected virtual void ShowMessage(string text)
+        {
+            MessageBox.Show(text);
         }
     }
 }
