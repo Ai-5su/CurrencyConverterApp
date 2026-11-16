@@ -100,7 +100,7 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Конвертер валют v1.1.0";
+            this.Text = "Конвертер валют v1.1.2";
             this.ResumeLayout(false);
             this.PerformLayout();
 
