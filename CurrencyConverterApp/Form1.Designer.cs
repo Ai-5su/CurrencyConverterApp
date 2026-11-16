@@ -111,10 +111,10 @@
 
         #endregion
 
-        private System.Windows.Forms.ComboBox fromCurrencyComboBox;
-        private System.Windows.Forms.ComboBox toCurrencyComboBox;
-        private System.Windows.Forms.TextBox amountTextBox;
-        private System.Windows.Forms.Button convertButton;
-        private System.Windows.Forms.Label resultLabel;
+        public System.Windows.Forms.ComboBox fromCurrencyComboBox;
+        public System.Windows.Forms.ComboBox toCurrencyComboBox;
+        public System.Windows.Forms.TextBox amountTextBox;
+        public System.Windows.Forms.Button convertButton;
+        public System.Windows.Forms.Label resultLabel;
     }
 }
