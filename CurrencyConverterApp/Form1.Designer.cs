@@ -28,11 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.fromCurrencyComboBox = new System.Windows.Forms.ComboBox();
             this.toCurrencyComboBox = new System.Windows.Forms.ComboBox();
             this.amountTextBox = new System.Windows.Forms.TextBox();
             this.convertButton = new System.Windows.Forms.Button();
             this.resultLabel = new System.Windows.Forms.Label();
+            this.refreshRatesButton = new System.Windows.Forms.Button();
+            this.ratesLabel = new System.Windows.Forms.Label();
+            this.rateStatusLabel = new System.Windows.Forms.Label();
+            this.ratesTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // fromCurrencyComboBox
@@ -65,10 +70,10 @@
             // 
             // convertButton
             // 
-            this.convertButton.Location = new System.Drawing.Point(40, 140);
+            this.convertButton.Location = new System.Drawing.Point(40, 156);
             this.convertButton.Margin = new System.Windows.Forms.Padding(4);
             this.convertButton.Name = "convertButton";
-            this.convertButton.Size = new System.Drawing.Size(281, 40);
+            this.convertButton.Size = new System.Drawing.Size(219, 40);
             this.convertButton.TabIndex = 3;
             this.convertButton.Text = "Конвертировать";
             this.convertButton.UseVisualStyleBackColor = true;
@@ -84,11 +89,46 @@
             this.resultLabel.TabIndex = 4;
             this.resultLabel.Text = "Результат:";
             // 
+            // refreshRatesButton
+            // 
+            this.refreshRatesButton.Location = new System.Drawing.Point(281, 156);
+            this.refreshRatesButton.Name = "refreshRatesButton";
+            this.refreshRatesButton.Size = new System.Drawing.Size(198, 40);
+            this.refreshRatesButton.TabIndex = 5;
+            this.refreshRatesButton.Text = "Обновить курсы";
+            this.refreshRatesButton.UseVisualStyleBackColor = true;
+            this.refreshRatesButton.Click += new System.EventHandler(this.refreshRatesButton_Click);
+            // 
+            // ratesLabel
+            // 
+            this.ratesLabel.AutoSize = true;
+            this.ratesLabel.Location = new System.Drawing.Point(40, 250);
+            this.ratesLabel.Name = "ratesLabel";
+            this.ratesLabel.Size = new System.Drawing.Size(187, 30);
+            this.ratesLabel.TabIndex = 6;
+            this.ratesLabel.Text = "Курсы: загрузка...";
+            // 
+            // rateStatusLabel
+            // 
+            this.rateStatusLabel.AutoSize = true;
+            this.rateStatusLabel.Location = new System.Drawing.Point(40, 290);
+            this.rateStatusLabel.Name = "rateStatusLabel";
+            this.rateStatusLabel.Size = new System.Drawing.Size(191, 30);
+            this.rateStatusLabel.TabIndex = 7;
+            this.rateStatusLabel.Text = "Статус: ожидание";
+            // 
+            // ratesTimer
+            // 
+            this.ratesTimer.Interval = 600000;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 30F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1067, 675);
+            this.ClientSize = new System.Drawing.Size(628, 394);
+            this.Controls.Add(this.rateStatusLabel);
+            this.Controls.Add(this.ratesLabel);
+            this.Controls.Add(this.refreshRatesButton);
             this.Controls.Add(this.resultLabel);
             this.Controls.Add(this.convertButton);
             this.Controls.Add(this.amountTextBox);
@@ -113,5 +153,9 @@
         public System.Windows.Forms.TextBox amountTextBox;
         public System.Windows.Forms.Button convertButton;
         public System.Windows.Forms.Label resultLabel;
+        private System.Windows.Forms.Button refreshRatesButton;
+        private System.Windows.Forms.Label ratesLabel;
+        private System.Windows.Forms.Label rateStatusLabel;
+        private System.Windows.Forms.Timer ratesTimer;
     }
 }
