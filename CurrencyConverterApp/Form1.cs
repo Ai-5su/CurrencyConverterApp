@@ -9,7 +9,9 @@ namespace CurrencyConverterApp
         private RateService rateService;
         private ExchangeRateProvider rateProvider;
 
-        public Form1()
+        public Form1() : this(new string[0]) { }
+
+        public Form1(string[] args)
         {
             InitializeComponent();
 
@@ -18,11 +20,21 @@ namespace CurrencyConverterApp
             fromCurrencyComboBox.SelectedIndex = 0;
             toCurrencyComboBox.SelectedIndex = 1;
 
-            rateProvider = new ExchangeRateProvider();
+            string ratesUrl = null;
+            bool skipRates = false;
+
+            foreach (var arg in args)
+            {
+                if (arg == "--no-rates") skipRates = true;
+                else if (arg.StartsWith("--rates-url=")) ratesUrl = arg.Substring(12);
+                else if (arg.StartsWith("--rates-interval-ms=")) ratesTimer.Interval = int.Parse(arg.Substring(19));
+            }
+
+            rateProvider = new ExchangeRateProvider(ratesUrl);
             rateService = new RateService(rateProvider);
 
             ratesTimer.Start();
-            RefreshRates(false);
+            if (!skipRates) RefreshRates(false);
         }
 
         public void convertButton_Click(object sender, EventArgs e)
