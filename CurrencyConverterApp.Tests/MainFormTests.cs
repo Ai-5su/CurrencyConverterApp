@@ -12,6 +12,7 @@ namespace CurrencyConverterApp.Tests
         public void SetUp()
         {
             _form = new TestableForm();
+            _form.SetupFakeRates(new FakeRateProvider { RateToReturn = 0.88m });
         }
 
         [TestCleanup]
@@ -38,31 +39,30 @@ namespace CurrencyConverterApp.Tests
             StringAssert.Contains(_form.resultLabel.Text, "88");
             StringAssert.Contains(_form.resultLabel.Text, "USD");
             StringAssert.Contains(_form.resultLabel.Text, "EUR");
-            Assert.AreEqual(0, _form.Messages.Count); // Нет сообщений об ошибках
+            Assert.AreEqual(0, _form.Messages.Count);
         }
 
         [TestMethod]
         public void ConvertButton_Click_WhenEurToUsd_ShowsResult()
         {
-            _form.fromCurrencyComboBox.SelectedIndex = 1; // EUR
-            _form.toCurrencyComboBox.SelectedIndex = 0;   // USD
+            _form.fromCurrencyComboBox.SelectedIndex = 1;
+            _form.toCurrencyComboBox.SelectedIndex = 0;
             _form.amountTextBox.Text = "100";
 
             _form.convertButton_Click(null, EventArgs.Empty);
 
-            StringAssert.Contains(_form.resultLabel.Text, "112");
+            StringAssert.Contains(_form.resultLabel.Text, "113");
         }
 
         [TestMethod]
         public void ConvertButton_Click_WhenSameCurrency_ShowsError()
         {
-            _form.fromCurrencyComboBox.SelectedIndex = 0; // USD
-            _form.toCurrencyComboBox.SelectedIndex = 0;   // USD
+            _form.fromCurrencyComboBox.SelectedIndex = 0;
+            _form.toCurrencyComboBox.SelectedIndex = 0;
             _form.amountTextBox.Text = "50";
 
             _form.convertButton_Click(null, EventArgs.Empty);
 
-            // Наша программа должна выдать ошибку, так как валюты одинаковые
             Assert.AreEqual(1, _form.Messages.Count);
             Assert.AreEqual("Не поддерживаемая пара валют.", _form.Messages[0]);
         }
@@ -109,14 +109,14 @@ namespace CurrencyConverterApp.Tests
 
             _form.convertButton_Click(null, EventArgs.Empty);
 
-            Assert.AreEqual(0, _form.Messages.Count); // Ошибки быть не должно
+            Assert.AreEqual(0, _form.Messages.Count);
         }
 
         [TestMethod]
         public void ConvertButton_Click_WhenUnsupportedPair_ShowsError()
         {
             _form.fromCurrencyComboBox.Items.Add("RUB");
-            _form.fromCurrencyComboBox.SelectedIndex = 2; // RUB
+            _form.fromCurrencyComboBox.SelectedIndex = 2;
             _form.amountTextBox.Text = "100";
 
             _form.convertButton_Click(null, EventArgs.Empty);

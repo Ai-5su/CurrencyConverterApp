@@ -26,5 +26,16 @@ namespace CurrencyConverterApp
                 throw new NotSupportedException("Не поддерживаемая пара валют.");
             }
         }
+
+        public void SetRates(decimal newUsdToEur, decimal newEurToUsd)
+        {
+            if (newUsdToEur <= 0 || newEurToUsd <= 0)
+            {
+                throw new ArgumentException("Курс должен быть положительным.");
+            }
+
+            usdToEur = newUsdToEur;
+            eurToUsd = newEurToUsd;
+        }
     }
 }

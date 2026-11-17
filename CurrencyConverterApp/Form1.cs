@@ -6,14 +6,23 @@ namespace CurrencyConverterApp
     public partial class Form1 : Form
     {
         private CurrencyConverter converter = new CurrencyConverter();
+        private RateService rateService;
+        private ExchangeRateProvider rateProvider;
 
         public Form1()
         {
             InitializeComponent();
+
             fromCurrencyComboBox.Items.AddRange(new object[] { "USD", "EUR" });
             toCurrencyComboBox.Items.AddRange(new object[] { "USD", "EUR" });
             fromCurrencyComboBox.SelectedIndex = 0;
             toCurrencyComboBox.SelectedIndex = 1;
+
+            rateProvider = new ExchangeRateProvider();
+            rateService = new RateService(rateProvider);
+
+            ratesTimer.Start();
+            RefreshRates(false);
         }
 
         public void convertButton_Click(object sender, EventArgs e)
@@ -56,6 +65,40 @@ namespace CurrencyConverterApp
             catch (Exception ex)
             {
                 ShowMessage(ex.Message);
+            }
+        }
+
+        private void refreshRatesButton_Click(object sender, EventArgs e)
+        {
+            RefreshRates(true);
+        }
+
+        private void ratesTimer_Tick(object sender, EventArgs e)
+        {
+            RefreshRates(false);
+        }
+
+        internal void RefreshRates(bool isManual)
+        {
+            bool success = rateService.Refresh();
+
+            if (success)
+            {
+                converter.SetRates(rateService.CurrentUsdToEur, rateService.CurrentEurToUsd);
+                ratesLabel.Text = $"Курсы: 1 USD = {rateService.CurrentUsdToEur:F4} EUR; 1 EUR = {rateService.CurrentEurToUsd:F4} USD";
+                rateStatusLabel.Text = $"Статус: Успешно обновлено ({DateTime.Now:HH:mm:ss})";
+                rateStatusLabel.ForeColor = System.Drawing.Color.Green;
+            }
+            else
+            {
+                ratesLabel.Text = $"Курсы: 1 USD = {rateService.CurrentUsdToEur:F4} EUR; 1 EUR = {rateService.CurrentEurToUsd:F4} USD";
+                rateStatusLabel.Text = "Статус: Ошибка обновления! Используются последние курсы.";
+                rateStatusLabel.ForeColor = System.Drawing.Color.Red;
+
+                if (isManual)
+                {
+                    ShowMessage($"Не удалось обновить курсы: {rateService.LastError}");
+                }
             }
         }
 
